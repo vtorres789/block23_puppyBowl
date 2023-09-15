@@ -4,7 +4,7 @@ const newPlayerFormContainer = document.getElementById('new-player-form');
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2302-ACC-PT-WEB-PT-A';
 // Use the APIURL variable for fetch requests
-const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
+const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
 
 /**
  * It fetches all players from the API and returns them
@@ -94,42 +94,42 @@ const removePlayer = async (playerId) => {
  * @param playerList - an array of player objects
  * @returns the playerContainerHTML variable.
  */
-const renderAllPlayers = (playerList) => {
+const renderAllPlayers = (players) => {
     try {
-        playerListContainer.innerHTML = '';
+        playerContainer.innerHTML = '';
         players.forEach((player) => {
           const playerElement = document.createElement('div');
           playerElement.classList.add('player');
-          playerElement.style.backgroundColor = getRandomColor()
+          // playerElement.style.backgroundColor = getRandomColor();
           playerElement.innerHTML = `
-                    <h2>${players.name}</h2>
-                    <p>${players.breed}</p>
-                    <p>${players.status}</p>
-                    <p>${players.teamId}</p>
-                    <p>${players.cohortId}</p>
+                    <h2>${player.name}</h2>
+                    <p>${player.breed}</p>
+                    <p>${player.status}</p>
+                    <p>${player.teamId}</p>
+                    <p>${player.cohortId}</p>
                     <button class="details-button" data-id="${player.id}">See Details</button>
                     <button class="delete-button" data-id="${player.id}">Delete</button>
                 `;
-          playerListContainer.appendChild(playerElement);
+          playerContainer.appendChild(playerElement);
     
           // see details
-          const detailsButton = partyElement.querySelector('.details-button');
+          const detailsButton = playerElement.querySelector('.details-button');
           detailsButton.addEventListener('click', async (event) => {
             // get the id
             const playerId = event.target.dataset.id
-            // send id to renderSinglePartyById function
-            renderSinglePartyById(partyId)
+            // send id to renderSinglePlayerById function
+            renderSinglePlayerById(playerId)
           });
     
-          // delete party
-          const deleteButton = partyElement.querySelector('.delete-button');
+          // delete player
+          const deleteButton = playerElement.querySelector('.delete-button');
           deleteButton.addEventListener('click', async (event) => {
             // get the id
-            const partyId = event.target.dataset.id
-            // pass the id to deleteParty function
-            deleteParty(partyId)
+            const playerId = event.target.dataset.id
+            // pass the id to deletePlayer function
+            deletePplayer(playerId)
             // get it off the page
-            event.target.closest('div.party').remove()
+            event.target.closest('div.player').remove()
           });
         });
     } catch (err) {

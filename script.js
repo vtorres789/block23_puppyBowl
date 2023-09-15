@@ -9,12 +9,15 @@ const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 /**
  * It fetches all players from the API and returns them
  * @returns An array of objects.
- */
+ *live server
+*/
+
 const fetchAllPlayers = async () => {
     try {
-        const response = await fetch(APIURL);
-        const players = await response.json();
-        return players;
+        const response = await fetch(APIURL + 'players');
+        const json = await response.json();
+        // console.log(json.data.players);
+        return json.data.players;
     } catch (err) {
         console.error('Uh oh, trouble fetching players!', err);
     }
@@ -181,13 +184,6 @@ const renderNewPlayerForm = () => {
     } catch (err) {
       console.error('Uh oh, trouble rendering the new player form!', err);
     }
-  }
-  
-  const init = async () => {
-    const players = await fetchAllPlayers();
-    renderAllPlayers(players);
-  
-    renderNewPlayerForm();
   }
 
 const init = async () => {
